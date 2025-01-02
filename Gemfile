@@ -18,6 +18,8 @@ gem 'postgresql'
 
 gem 'activerecord', '~> 7.1'
 
+gem 'slim-rails', '~> 3.1', '>= 3.1.1'
+
 gem 'devise', '~> 4.9.2'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"

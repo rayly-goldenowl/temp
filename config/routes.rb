@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   root 'pages#index'
   get 'pages/index'
-  get 'users/sign_out' => 'devise/sessions#destroy'
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
