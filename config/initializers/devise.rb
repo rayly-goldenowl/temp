@@ -37,7 +37,7 @@ Devise.setup do |config|
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
   require 'devise/orm/active_record'
-
+  require "omniauth-google-oauth2"
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -316,5 +316,9 @@ Devise.setup do |config|
       jwt.dispatch_requests = [['POST', %r{^/users/sign_in$}]]
       jwt.revocation_requests = [['DELETE', %r{^users/sign_out$}]]
     end
+
+    config.omniauth :google_oauth2, Rails.application.credentials["GOOGLE_OAUTH_CLIENT_ID"], Rails.application.credentials["GOOGLE_OAUTH_CLIENT_SECRET"]
+
   end
+
 end
