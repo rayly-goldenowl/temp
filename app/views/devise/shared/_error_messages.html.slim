@@ -1,0 +1,6 @@
+- if resource.errors.any?
+  #error_explanation data-turbo-cache='false'
+    - resource.errors.full_messages.each do |message|
+      p.text-red-600.mb-2.break-words
+        = message
+      - break
