@@ -1,0 +1,34 @@
+/* * {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 40px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.list_nav {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.wrapper {
+    display: flex;
+    background: rgb(156, 156, 241);
+    width: 350px;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+} */

@@ -72,3 +72,15 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'font-awesome-sass'
+
+gem 'devise-jwt'
+
+gem "tailwindcss-rails"
+
+gem "tailwindcss-ruby", "3.4.13"
+
+gem 'rack-cors'
+
+gem 'jsonapi-serializer'
