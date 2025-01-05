@@ -1,30 +1,31 @@
   .wrapper.grid. class="grid-cols-[400px_400px] grid-rows-[400px] min-h-screen justify-center items-center mt-[100px]"
     .form_login class="flex justify-center items-center w-full h-full  rounded-l-lg shadow-lg"
-      .form_info.flex.justify-center.text-left
-        = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-          .field
-            = f.label :email, class:"block"
-            = f.email_field :email, autofocus: true, autocomplete: "email", class: "p-2 rounded-lg mt-2 mb-6 border border-gray-300 focus:border-blue-500"
+      .log
+        .form_info.flex.justify-center.text-left
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            .field
+              = f.label :email, class:"block"
+              = f.email_field :email, autofocus: true, autocomplete: "email", class: "p-2 rounded-lg mt-2 mb-6 border border-gray-300 focus:border-blue-500"
 
-          .field
-            = f.label :password, class:"block"
-            = f.password_field :password, autocomplete: "current-password", class: "p-2 rounded-lg mt-2 mb-6 border border-gray-300 focus:border-blue-500"
-          
-          .actions
-            = f.submit "Log in", class: "bg-red-400 px-[50px] py-[10px] rounded-lg mb-4 items-center w-full text-white cursor-pointer"
+            .field
+              = f.label :password, class:"block"
+              = f.password_field :password, autocomplete: "current-password", class: "p-2 rounded-lg mt-2 mb-6 border border-gray-300 focus:border-blue-500"
+            
+            .actions
+              = f.submit "Log in", class: "bg-red-400 px-[50px] py-[10px] rounded-lg mb-4 items-center w-full text-white cursor-pointer"
 
-          - if devise_mapping.rememberable?
-            .field.mb-2
-              = f.check_box :remember_me
-              = f.label :remember_me
-          .p.text-red-600.w-full.break-words
-            = alert 
-
-          
+            - if devise_mapping.rememberable?
+              .field.mb-2
+                = f.check_box :remember_me
+                = f.label :remember_me
+            .p.text-red-600.w-full.break-words
+              = alert 
+        - if devise_mapping.omniauthable?
+          - resource_class.omniauth_providers.each do |provider|
+            = button_to "Sign in with Google", omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: false }           
 
     .block_right class = "bg-red-400 flex justify-center items-center w-full h-full  rounded-r-lg shadow-lg"
       .sign_up.flex-col.justify-center.text-center
         p.text-2xl.text-white.mb-8.font-bold Welcome to login 
         p.text-white.mb-8 Don't have an account?
         = render "devise/shared/links", class: "text-white"
-

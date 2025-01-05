@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
   namespace :api do
@@ -23,8 +24,3 @@ Rails.application.routes.draw do
 
 
 end
-
-# Rails.application.routes.draw do
-#   root 'pages#index'
-#   get 'pages/index'
-# end

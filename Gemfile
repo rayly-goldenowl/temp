@@ -84,3 +84,9 @@ gem "tailwindcss-ruby", "3.4.13"
 gem 'rack-cors'
 
 gem 'jsonapi-serializer'
+
+gem "omniauth"
+
+gem "omniauth-google-oauth2"
+
+gem "omniauth-rails_csrf_protection"
