@@ -1,0 +1,12 @@
+= turbo_frame_tag dom_id(@todo),data: { turbo: true }, class:"flex justify-between "
+  = form_with model: @todo, local: true, class: "border p-2 rounded-md w-full" do |form|
+    .div
+      .field.mb-3
+        = form.label :title ,class: "mr-5"
+        = form.text_field :title, value: "#{@todo.title}" , class: "border w-full"
+    .flex.justify-between.items-center
+      .field
+        = form.label :priority
+        = form.select :priority, options_for_select([['High', 'high'], ['Medium', 'medium'], ['Low', 'low']], selected: @todo.priority), {}, class: "p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      .actions
+        = form.submit 'Save', class: "btn btn-primary"

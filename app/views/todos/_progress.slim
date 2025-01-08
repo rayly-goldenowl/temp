@@ -1,0 +1,12 @@
+= turbo_frame_tag 'progress', class: " info flex gap-5 py-5 " do
+  .flex-col.text-center.w-full.gap-5
+    p Completed 
+    p #{todos.where(status: 'completed').count}
+  .flex-col.text-center.w-full.gap-5
+    p Pending 
+    p #{todos.where(status: 'pending').count}
+  .flex-col.text-center.w-full.gap-5
+    p Progress 
+    - completed_count = todos.where(status: 'completed').count
+    - progress = completed_count > 0 ? (completed_count.to_f / todos.count * 100).round(2) : 0
+    p = "#{progress}%"
