@@ -8,10 +8,16 @@ class TodosController < ApplicationController
     end
   end
 
+  def show
+  end
+
   def edit
     respond_to do |format|
+
       format.html
-    end    
+    end
+
+    
   end
 
   def new
@@ -26,26 +32,18 @@ class TodosController < ApplicationController
     @todo.user = current_user
     if @todo.save
       respond_to do |format|
-        format.turbo_stream { 
-          render turbo_stream:[
-            turbo_stream.replace('new_todo_form', partial: 'todos/closeform'),
-            turbo_stream.after('new_todo_form', partial: 'todos/todo', locals: { todo: @todo }),
-            turbo_stream.replace('progress', partial: 'todos/progress', locals: { todos: current_user.todos })
-           ]
-        }
+        format.turbo_stream 
         format.html { redirect_to todos_path, notice: 'Todo was successfully created.' }
       end
+    else
+      render json: { error: @todo.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
     if @todo.update(todo_params)
       respond_to do |format|
-        format.turbo_stream { 
-        render turbo_stream:[ 
-          turbo_stream.replace(dom_id(@todo), partial: 'todos/todo', locals: { todo: @todo }),
-          turbo_stream.replace('progress', partial: 'todos/progress', locals: { todos: current_user.todos }) 
-        ]}
+        format.turbo_stream
         format.html
       end
     end
@@ -53,25 +51,20 @@ class TodosController < ApplicationController
 
   def destroy
     @todo.destroy
-  
     respond_to do |format|
-      format.turbo_stream { render turbo_stream:[ turbo_stream.remove(@todo),
-      turbo_stream.replace('progress', partial: 'todos/progress', locals: { todos: current_user.todos })
-      ] }
+      format.turbo_stream 
       format.html 
     end
   end
 
   def todo_params
-    todo_params = params.require(:todo).permit(:title, :priority, :status).merge(user_id: current_user.id)
-    
-    if todo_params[:status] == '0'
-      todo_params[:status] = 'pending'
-    elsif todo_params[:status] == '1'
-      todo_params[:status] = 'completed'
+    params.require(:todo).permit(:title, :priority, :status).merge(user_id: current_user.id).tap do |todo_params|
+      if todo_params[:status] == '0'
+        todo_params[:status] = 'pending'
+      elsif todo_params[:status] == '1'
+        todo_params[:status] = 'completed'
+      end
     end
-
-    todo_params
   end
 
 
