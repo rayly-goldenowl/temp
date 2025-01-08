@@ -57,6 +57,7 @@ class TodosController < ApplicationController
     end
   end
 
+  private
   def todo_params
     params.require(:todo).permit(:title, :priority, :status).merge(user_id: current_user.id).tap do |todo_params|
       if todo_params[:status] == '0'
@@ -67,7 +68,7 @@ class TodosController < ApplicationController
     end
   end
 
-
+  private
   def set_todo
     @todo = Todo.find(params[:id])
   end
