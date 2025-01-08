@@ -1,8 +1,8 @@
 .wrapper class="w-full h-full flex flex-col justify-center items-center "
   - if user_signed_in?
-      .container class="w-[55%] border border-gray-400 flex flex-col gap-6 bg-inherit shadow-md rounded-md p-8"
+      .container class="w-[55%] border border-gray-400 flex flex-col gap-6 bg-inherit shadow-md rounded-md p-8 text-center"
         h1.text-center Welcome Home, #{current_user.email}
-        .info.flex.gap-5.py-5
+        = turbo_frame_tag 'progress', class: " info flex gap-5 py-5 " do
           .flex-col.text-center.w-full.gap-5
             p Completed 
             p #{@todos.where(status: 'completed').count}
@@ -11,19 +11,18 @@
             p #{@todos.where(status: 'pending').count}
           .flex-col.text-center.w-full.gap-5
             p Progress 
-            p #{@todos.where(status: 'completed').count} - #{@todos.where(status: 'pending').count}
+            - completed_count = @todos.where(status: 'completed').count
+            - progress = completed_count > 0 ? (completed_count.to_f / @todos.count * 100).round(2) : 0
+            p = "#{progress}%"
         .addtask.flex.justify-between.items-center.mt-4.mb-3
           .flex.flex-col.gap-1
             h2.text-xl.font-semibold Today Task
             p.text-sm.text-gray-400 =Date.today
-          button.justify-center.whitespace-nowrap.rounded-md.bg-lime-500.p-2
-            span New task
+          = link_to 'New task', new_todo_path, data: { turbo_frame: 'new_todo_form' }, class: "justify-center whitespace-nowrap rounded-md bg-lime-500 p-2"
         .data.h-full.w-full.rounded
-            - @todos.each do |todo|
-              = turbo_frame_tag dom_id(todo) do
-                .border.flex-col.items-center.p-3.rounded-md.w-full.justify-between.mb-3.opacity-65
-                  .flex.items-center.gap-2.justify-between
-                    = render todo
+          = turbo_frame_tag 'new_todo_form'
+          - @todos.each do |todo|
+            = render todo
 
 
       = link_to 'Sign out', destroy_user_session_path, data: { turbo_method: :delete }

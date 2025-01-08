@@ -1,0 +1,17 @@
+= turbo_frame_tag dom_id(todo),data: { turbo: true }, class:"flex justify-between" do
+  .border.flex-col.items-center.p-3.rounded-md.w-full.justify-between.mb-3.opacity-65
+    .flex.items-center.gap-2.justify-between
+      .flex.gap-2.text-left
+        .flex.items-center.gap-2 
+          = form_with model: todo, remote: true do |form|
+            = form.check_box :status, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded", id: "todo_#{todo.id}_status", checked: todo.status == 'completed',onchange: "this.form.requestSubmit()"
+        .flex-col.justify-start
+          h2 = todo.title
+          label.text-sm.font-medium.text-gray-400.dark:text-gray-500 for="todo_#{todo.id}_status" = todo.status.capitalize
+      .flex.items-center.gap-3
+        .relative.inline-block.text-left
+          = form_with model: todo, data: { turbo_action: "replace" }, remote: true do |form|
+            = form.select :priority, options_for_select([['High', 'high'], ['Medium', 'medium'], ['Low', 'low']], selected: todo.priority), {}, class: "p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",onchange: "this.form.requestSubmit()"
+            .flex.gap-2.justify-between
+              = link_to 'Delete', todo ,data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}
+              = link_to 'Edit', edit_todo_path(todo), data: { turbo_frame: 'edit_todo_form' }

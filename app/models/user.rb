@@ -9,6 +9,8 @@ class User < ApplicationRecord
           jwt_revocation_strategy: JwtDenylist,
           omniauth_providers: [:google_oauth2]
 
+  has_many :todos, dependent: :destroy
+  
   def self.from_omniauth access_token
     data = access_token.info
     User.where(email: data["email"])
